@@ -3,7 +3,7 @@ import { Avatar, Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
 interface IProfile {
-  name?: string;
+  name: string;
 }
 
 export const Profile: FC<IProfile> = (props): ReactElement => {
@@ -38,5 +38,5 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
 };
 
 Profile.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
