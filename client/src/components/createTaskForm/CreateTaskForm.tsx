@@ -1,10 +1,10 @@
 import React, { FC, ReactElement } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 
-import { TaskTitleField } from './helpers/TaskTitleField';
-import { TaskDescriptionField } from './helpers/TaskDescriptionField';
-import { TaskDateField } from './helpers/TaskDateField';
-import { TaskSelectField } from './helpers/TaskSelectField';
+import { TaskTitleField } from './CreateTaskFormComponents/TaskTitleField';
+import { TaskDescriptionField } from './CreateTaskFormComponents/TaskDescriptionField';
+import { TaskDateField } from './CreateTaskFormComponents/TaskDateField';
+import { TaskSelectField } from './CreateTaskFormComponents/TaskSelectField';
 
 import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
