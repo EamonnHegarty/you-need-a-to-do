@@ -6,7 +6,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material';
-import { ISelectField } from '../interfaces/ISelectField';
+import { ISelectField } from './interfaces/ISelectField';
 import PropTypes from 'prop-types';
 export const TaskSelectField: FC<ISelectField> = (props): ReactElement => {
   const {
