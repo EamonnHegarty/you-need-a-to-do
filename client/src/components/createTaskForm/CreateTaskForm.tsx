@@ -4,6 +4,10 @@ import { Box, Typography, Stack } from '@mui/material';
 import { TaskTitleField } from './helpers/TaskTitleField';
 import { TaskDescriptionField } from './helpers/TaskDescriptionField';
 import { TaskDateField } from './helpers/TaskDateField';
+import { TaskSelectField } from './helpers/TaskSelectField';
+
+import { Status } from './enums/Status';
+import { Priority } from './enums/Priority';
 
 export const CreateTaskFrom: FC = (): ReactElement => {
   return (
@@ -23,6 +27,44 @@ export const CreateTaskFrom: FC = (): ReactElement => {
         <TaskTitleField />
         <TaskDescriptionField />
         <TaskDateField />
+        <Stack sx={{ width: '100%' }} direction="row" spacing={2}>
+          <TaskSelectField
+            label="Status"
+            name="status"
+            items={[
+              {
+                value: Status.todo,
+                label: Status.todo.toUpperCase(),
+              },
+              {
+                value: Status.inProgress,
+                label: Status.inProgress.toUpperCase(),
+              },
+              {
+                value: Status.completed,
+                label: Status.completed.toUpperCase(),
+              },
+            ]}
+          />
+          <TaskSelectField
+            label="Priority"
+            name="priority"
+            items={[
+              {
+                value: Priority.low,
+                label: Priority.low,
+              },
+              {
+                value: Priority.normal,
+                label: Priority.normal,
+              },
+              {
+                value: Priority.high,
+                label: Priority.high,
+              },
+            ]}
+          />
+        </Stack>
       </Stack>
     </Box>
   );
