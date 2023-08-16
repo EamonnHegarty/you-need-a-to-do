@@ -1,4 +1,4 @@
-import { Status } from '../../createTaskForm/enums/Status';
+import { Status } from '../enums/Status';
 
 export type TaskCounterStatusType =
   | Status.todo

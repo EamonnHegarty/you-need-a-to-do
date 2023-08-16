@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
-import { ITaskCounter } from './interfaces/ITaskCounter';
-import { Status } from '../createTaskForm/enums/Status';
-import { emitCorrectBorderColor } from './helpers/emitCorrectBorderColor';
-import { emitCorrectLabel } from './helpers/emitCorrectLabel';
+import { ITaskCounter } from '../../interfaces/ITaskCounter';
+import { Status } from '../../enums/Status';
+import { emitCorrectBorderColor } from '../../helpers/emitCorrectBorderColor';
+import { emitCorrectLabel } from '../../helpers/emitCorrectLabel';
 import PropTypes from 'prop-types';
 
 export const TaskCounter: FC<ITaskCounter> = (props): ReactElement => {

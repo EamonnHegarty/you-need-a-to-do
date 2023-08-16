@@ -3,11 +3,11 @@ import { Box } from '@mui/material';
 import { TaskHeader } from './TaskHeader';
 import { TaskDescription } from './TaskDescription';
 import { TaskFooter } from './TaskFooter';
-import { ITask } from './interfaces/ITask';
-import { Status } from '../createTaskForm/enums/Status';
-import { Priority } from '../createTaskForm/enums/Priority';
+import { ITask } from '../../interfaces/ITask';
+import { Status } from '../../enums/Status';
+import { Priority } from '../../enums/Priority';
 import PropTypes from 'prop-types';
-import { renderPriorityBorderColor } from './helpers/renderPriorityBorderColor';
+import { renderPriorityBorderColor } from '../../helpers/renderPriorityBorderColor';
 
 export const Task: FC<ITask> = (props): ReactElement => {
   const {

@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react';
 import { Box, Chip, Typography } from '@mui/material';
-import { ITaskHeader } from './interfaces/ITaskHeader';
+import { ITaskHeader } from '../../interfaces/ITaskHeader';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 

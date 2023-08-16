@@ -6,8 +6,8 @@ import { TaskDescriptionField } from './TaskDescriptionField';
 import { TaskDateField } from './TaskDateField';
 import { TaskSelectField } from './TaskSelectField';
 
-import { Status } from './enums/Status';
-import { Priority } from './enums/Priority';
+import { Status } from '../../enums/Status';
+import { Priority } from '../../enums/Priority';
 
 export const CreateTaskFrom: FC = (): ReactElement => {
   return (

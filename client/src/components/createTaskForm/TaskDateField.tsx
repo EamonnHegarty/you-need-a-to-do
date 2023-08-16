@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { IDateField } from './interfaces/IDateField';
+import { IDateField } from '../../interfaces/IDateField';
 import Proptypes from 'prop-types';
 
 export const TaskDateField: FC<IDateField> = (props): ReactElement => {
