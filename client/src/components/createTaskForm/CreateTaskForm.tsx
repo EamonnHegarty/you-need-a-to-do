@@ -63,7 +63,6 @@ export const CreateTaskFrom: FC = (): ReactElement => {
       <Typography mb={2} component="h2" variant="h6">
         Create A Task
       </Typography>
-
       <Stack sx={{ width: '100%' }} spacing={2}>
         <TextField
           id="title"
@@ -74,7 +73,6 @@ export const CreateTaskFrom: FC = (): ReactElement => {
           name="title"
           fullWidth
         />
-
         <TextField
           id="Description"
           name="description"
@@ -86,11 +84,9 @@ export const CreateTaskFrom: FC = (): ReactElement => {
           rows={4}
           fullWidth
         />
-
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker label="Task Date" format="DD/MM/YY" />
         </LocalizationProvider>
-
         <Stack sx={{ width: '100%' }} direction="row" spacing={2}>
           <TaskSelectField
             label="Status"
