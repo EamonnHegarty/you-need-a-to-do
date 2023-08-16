@@ -1,0 +1,12 @@
+{
+  "name": "you-need-a-to-do",
+  "version": "1.0.0",
+  "description": "full stack to do application",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "author": "Eamonn Hegarty",
+  "license": "MIT"
+}
