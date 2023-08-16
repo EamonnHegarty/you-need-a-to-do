@@ -15,6 +15,7 @@ export const Task: FC<ITask> = (props): ReactElement => {
     date = new Date(),
     description = 'Test Description',
     priority = Priority.normal,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     status = Status.completed,
     onStatusChange = (e) => console.log(e),
     onClick = (e) => console.log(e),
