@@ -1,24 +1,22 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Grid, Box } from '@mui/material';
 import { format } from 'date-fns';
 import { TaskCounter } from '../taskCounter/TaskCounter';
 import { Task } from '../task/Task';
-import axios from 'axios';
 import { IData } from '../../interfaces/IData';
+import { useGetTodosQuery } from '../../store/slices/todosApiSlice';
 
 export const TaskArea: FC = (): ReactElement => {
-  const [toDos, setToDos] = useState<IData[]>([]);
+  const {
+    data: toDos,
+    isLoading,
+    isError,
+  } = useGetTodosQuery() as {
+    data: IData[];
+    isLoading: boolean;
+    isError: boolean;
+  };
 
-  useEffect(() => {
-    const fetchToDos = async () => {
-      const { data } = await axios.get('/api/todos');
-      setToDos(data);
-    };
-
-    fetchToDos();
-  }, []);
-
-  console.log(toDos);
   return (
     <Grid item md={8} px={4}>
       <Grid container display="flex" justifyContent="center">
@@ -41,7 +39,7 @@ export const TaskArea: FC = (): ReactElement => {
         </Grid>
         {/* TASKS */}
         <Grid item display="flex" flexDirection="column" xs={10} md={8}>
-          {toDos.map((toDo, index) => (
+          {toDos?.map((toDo, index) => (
             <Task
               key={index}
               title={toDo.title}
