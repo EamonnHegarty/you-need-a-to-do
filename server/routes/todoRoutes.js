@@ -8,7 +8,6 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const todos = await Todo.find({});
-    console.log(todos);
     res.json(todos);
   })
 );
