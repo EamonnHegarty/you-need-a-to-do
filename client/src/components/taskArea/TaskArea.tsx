@@ -3,16 +3,10 @@ import { Grid, Box } from '@mui/material';
 import { format } from 'date-fns';
 import { TaskCounter } from '../taskCounter/TaskCounter';
 import { Task } from '../task/Task';
-import { IData } from '../../interfaces/IData';
+import { useAppSelector } from '../../hooks';
 
 export const TaskArea: FC = (): ReactElement => {
-  const toDos = [
-    {
-      title: 'hi',
-      description: 'hi',
-      priority: 'high',
-    },
-  ];
+  const { data } = useAppSelector((state) => state.app);
 
   return (
     <Grid item md={8} px={4}>
@@ -36,7 +30,7 @@ export const TaskArea: FC = (): ReactElement => {
         </Grid>
         {/* TASKS */}
         <Grid item display="flex" flexDirection="column" xs={10} md={8}>
-          {toDos?.map((toDo, index) => (
+          {data?.map((toDo, index) => (
             <Task
               key={index}
               title={toDo.title}

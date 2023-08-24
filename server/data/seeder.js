@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import users from "./data/users.js";
-import todos from "./data/todos.js";
-import User from "./models/userModel.js";
-import ToDo from "./models/todoModel.js";
-import connectDB from "./config/db.js";
+import users from "./users.js";
+import todos from "./todos.js";
+import User from "../models/userModel.js";
+import ToDo from "../models/todoModel.js";
+import connectDB from "../config/db.js";
 
 dotenv.config();
 

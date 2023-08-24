@@ -9,8 +9,8 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:create": "node server/seeder.js",
-    "data:delete": "node server/seeder.js -d"
+    "data:create": "node server/data/seeder.js",
+    "data:delete": "node server/data/seeder.js -d"
   },
   "author": "Eamonn Hegarty",
   "license": "MIT",
