@@ -4,18 +4,15 @@ import { format } from 'date-fns';
 import { TaskCounter } from '../taskCounter/TaskCounter';
 import { Task } from '../task/Task';
 import { IData } from '../../interfaces/IData';
-import { useGetTodosQuery } from '../../store/slices/todosApiSlice';
 
 export const TaskArea: FC = (): ReactElement => {
-  const {
-    data: toDos,
-    isLoading,
-    isError,
-  } = useGetTodosQuery() as {
-    data: IData[];
-    isLoading: boolean;
-    isError: boolean;
-  };
+  const toDos = [
+    {
+      title: 'hi',
+      description: 'hi',
+      priority: 'high',
+    },
+  ];
 
   return (
     <Grid item md={8} px={4}>

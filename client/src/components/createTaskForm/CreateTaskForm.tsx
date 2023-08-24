@@ -17,8 +17,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ISelectField } from '../../interfaces/ISelectField';
+import { useAppSelector } from '../../hooks';
 
 const TaskSelectField: FC<ISelectField> = (props): ReactElement => {
+  // will get state from here
+  const { test } = useAppSelector((state) => state.app);
+
+  console.log(test);
   const {
     value = '',
     label = 'Select Box',
