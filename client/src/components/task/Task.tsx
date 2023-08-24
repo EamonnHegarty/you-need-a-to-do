@@ -11,7 +11,6 @@ import { ITask } from '../../interfaces/ITask';
 import { Status } from '../../enums/Status';
 import { Priority } from '../../enums/Priority';
 import PropTypes from 'prop-types';
-import { renderPriorityBorderColor } from '../../helpers/renderPriorityBorderColor';
 import { format } from 'date-fns';
 
 export const Task: FC<ITask> = (props): ReactElement => {
@@ -38,8 +37,6 @@ export const Task: FC<ITask> = (props): ReactElement => {
         width: '100%',
         backgroundColor: 'background.paper',
         borderRadius: '8px',
-        border: '1px solid',
-        borderColor: renderPriorityBorderColor(priority),
       }}
     >
       <Box display="flex" width="100%" justifyContent="space-between" mb={2}>
