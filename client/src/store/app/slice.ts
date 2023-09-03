@@ -6,7 +6,7 @@ type AppState = {
   data: Array<IData> | [];
   title: string;
   description: string;
-  taskDate: Date;
+  // taskDate: Date;
   status: string;
   priority: string;
 };
@@ -15,7 +15,7 @@ const initialState: AppState = {
   data: [],
   title: '',
   description: '',
-  taskDate: new Date(),
+  // taskDate: new Date(),
   status: '',
   priority: '',
 };
@@ -33,9 +33,9 @@ const { actions, reducer } = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.description = action.payload;
     },
-    setTaskDate: (state, action: PayloadAction<Date>) => {
-      state.taskDate = action.payload;
-    },
+    // setTaskDate: (state, action: PayloadAction<Date>) => {
+    //   state.taskDate = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(

@@ -9,8 +9,8 @@ import {
   Select,
   FormControl,
   MenuItem,
+  Button,
 } from '@mui/material';
-
 import { Status } from '../../enums/Status';
 import { Priority } from '../../enums/Priority';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -105,6 +105,9 @@ export const CreateTaskFrom: FC = (): ReactElement => {
             }))}
           />
         </Stack>
+        <Button variant="contained" size="large" fullWidth>
+          Create A Task
+        </Button>
       </Stack>
     </Box>
   );

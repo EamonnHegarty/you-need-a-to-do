@@ -2,25 +2,31 @@ import React, { FC, ReactElement } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material/';
 import { customTheme } from './theme/cutsomTheme';
 import { Dashboard } from './pages/dashboard/Dashboard';
+import { Login } from './pages/auth/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/* EVENTUALLY SHOULD LAND ON LOGIN PAGE OR POSSIBLY CREATE A LANDING PAGE */}
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };
 
 const App: FC = (): ReactElement => {
   return (
-    <ThemeProvider theme={customTheme}>
-      <CssBaseline />
-      <Router>
-        <AppRouter />
-      </Router>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={customTheme}>
+        <CssBaseline />
+        <Router>
+          <AppRouter />
+        </Router>
+      </ThemeProvider>
+      <ToastContainer />
+    </>
   );
 };
 
