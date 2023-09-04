@@ -5,7 +5,6 @@ import connectDB from "./config/db.js";
 import todoRoutes from "./routes/todoRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-import cors from "cors";
 
 dotenv.config();
 
@@ -21,8 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Cookie parser middleware
 app.use(cookieParser());
-
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Up and running baby");

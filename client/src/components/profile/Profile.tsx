@@ -1,34 +1,36 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { Avatar, Box, Typography, Tooltip, IconButton } from '@mui/material';
-import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { logout } from '../../store/user/apiActions';
-import { logoutClient } from '../../store/user/action';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutClient } from '../../slices/authSlice';
+import { useLogoutMutation } from '../../slices/usersApiSlice';
+import { toast } from 'react-toastify';
 
 interface IProfile {
   name: string;
 }
 
-export const Profile: FC<IProfile> = (props): ReactElement => {
-  const { name = 'Eamonn' } = props;
-
+export const Profile: FC<IProfile> = (): ReactElement => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { userInfo } = useAppSelector((state) => state.auth);
+  const [logout] = useLogoutMutation();
+
   const handleOnLogout = useCallback(() => {
-    const promise = dispatch(logout()).unwrap();
+    const promise = logout({}).unwrap();
+
     promise
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        toast.success('Log out successful');
         dispatch(logoutClient());
         navigate('/');
       })
       .catch(() => {
         console.log('Failed to log out');
       });
-  }, [dispatch, navigate]);
+  }, [dispatch, logout, navigate]);
 
   return (
     <Box
@@ -47,7 +49,7 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
           }}
         >
           <Typography variant="h4" color="text.primary">
-            {`${name.substring(0, 1)}`}
+            {`${userInfo?.name.substring(0, 1)}`}
           </Typography>
         </Avatar>
         <Tooltip title="Logout" placement="right">
@@ -64,15 +66,11 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
         </Tooltip>
       </Box>
       <Typography variant="h6" color="text.primary">
-        {`Welcome ${name}`}
+        {`Welcome ${userInfo?.name}`}
       </Typography>
       <Typography variant="body1" color="text.primary">
         This is your personal tasks manager
       </Typography>
     </Box>
   );
-};
-
-Profile.propTypes = {
-  name: PropTypes.string.isRequired,
 };
