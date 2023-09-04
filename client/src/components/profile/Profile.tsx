@@ -15,6 +15,7 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      paddingTop={5}
     >
       <Box position="relative" display="inline-flex">
         <Avatar

@@ -81,8 +81,9 @@ export const Login: FC = (): ReactElement => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <FormControl component="fieldset" fullWidth>
-          <Box sx={{ mt: 1 }}>
+
+        <Box sx={{ mt: 1 }}>
+          <FormControl fullWidth>
             <TextField
               margin="normal"
               value={email}
@@ -95,6 +96,8 @@ export const Login: FC = (): ReactElement => {
               autoComplete="email"
               autoFocus
             />
+          </FormControl>
+          <FormControl fullWidth>
             <TextField
               margin="normal"
               value={password}
@@ -107,18 +110,17 @@ export const Login: FC = (): ReactElement => {
               id="password"
               autoComplete="current-password"
             />
-
-            <Button
-              onClick={handleOnSubmitForm}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Link to="/register"> {'   '}Register</Link>
-          </Box>
-        </FormControl>
+          </FormControl>
+          <Button
+            onClick={handleOnSubmitForm}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Link to="/register"> {'   '}Register</Link>
+        </Box>
       </Box>
     </Container>
   );
