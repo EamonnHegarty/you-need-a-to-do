@@ -50,7 +50,7 @@ const TaskSelectField: FC<ISelectField> = (props): ReactElement => {
   );
 };
 
-export const CreateTaskFrom: FC = (): ReactElement => {
+export const CreateTaskForm: FC = (): ReactElement => {
   return (
     <Box
       display="flex"
