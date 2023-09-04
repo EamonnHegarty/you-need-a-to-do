@@ -49,7 +49,7 @@ export const Profile: FC<IProfile> = (): ReactElement => {
           }}
         >
           <Typography variant="h4" color="text.primary">
-            {`${userInfo?.name.substring(0, 1)}`}
+            {`${userInfo?.name.substring(0, 1) || 'U'}`}
           </Typography>
         </Avatar>
         <Tooltip title="Logout" placement="right">
@@ -66,7 +66,7 @@ export const Profile: FC<IProfile> = (): ReactElement => {
         </Tooltip>
       </Box>
       <Typography variant="h6" color="text.primary">
-        {`Welcome ${userInfo?.name}`}
+        {`Welcome ${userInfo?.name || 'User'}`}
       </Typography>
       <Typography variant="body1" color="text.primary">
         This is your personal tasks manager
