@@ -18,6 +18,7 @@ import { login } from '../../store/user/apiActions';
 import { setUserInfo } from '../../store/user/action';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { UserInfo } from '../../interfaces/IUserInfo';
 
 export const Login: FC = (): ReactElement => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,7 @@ export const Login: FC = (): ReactElement => {
 
   useEffect(() => {
     if (userInfo) {
+      console.log(userInfo);
       navigate('/dashboard');
     }
   }, [userInfo, navigate]);
@@ -52,14 +54,18 @@ export const Login: FC = (): ReactElement => {
 
   const handleOnSubmitForm = useCallback(() => {
     const promise = dispatch(login({ email, password })).unwrap();
+
     promise
-      .then((response) => {
-        console.log(response);
+      .then((response: UserInfo) => {
+        dispatch(setUserInfo(response));
+        toast.success('Successfully logged In');
+        navigate('/dashboard');
       })
       .catch(() => {
         console.log('error');
+        toast.error('Failed to log in');
       });
-  }, [dispatch, email, password]);
+  }, [dispatch, email, navigate, password]);
 
   return (
     <Container component="main" maxWidth="xs">

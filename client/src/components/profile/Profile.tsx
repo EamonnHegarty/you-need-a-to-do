@@ -1,7 +1,11 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useCallback } from 'react';
 import { Avatar, Box, Typography, Tooltip, IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { logout } from '../../store/user/apiActions';
+import { logoutClient } from '../../store/user/action';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
 
 interface IProfile {
   name: string;
@@ -9,6 +13,23 @@ interface IProfile {
 
 export const Profile: FC<IProfile> = (props): ReactElement => {
   const { name = 'Eamonn' } = props;
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleOnLogout = useCallback(() => {
+    const promise = dispatch(logout()).unwrap();
+    promise
+      .then((response) => {
+        console.log(response);
+        dispatch(logoutClient());
+        navigate('/');
+      })
+      .catch(() => {
+        console.log('Failed to log out');
+      });
+  }, [dispatch, navigate]);
+
   return (
     <Box
       display="flex"
@@ -31,7 +52,7 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
         </Avatar>
         <Tooltip title="Logout" placement="right">
           <IconButton
-            onClick={() => console.log('logout')}
+            onClick={handleOnLogout}
             sx={{
               position: 'absolute',
               bottom: '0px',

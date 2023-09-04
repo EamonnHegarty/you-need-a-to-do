@@ -1,3 +1,3 @@
 import { actions } from './slice';
 
-export const { setUserInfo } = actions;
+export const { setUserInfo, logoutClient } = actions;

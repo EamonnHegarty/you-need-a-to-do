@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-type UserInfo = {
-  _id: string;
-  name: string;
-  email: string;
-  isAdmin: boolean;
-};
+import { UserInfo } from '../../interfaces/IUserInfo';
 
 type UserState = {
   userInfo: UserInfo | null;
@@ -27,6 +21,11 @@ const { actions, reducer } = createSlice({
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
       localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    logoutClient: (state) => {
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
     },
   },
 });
