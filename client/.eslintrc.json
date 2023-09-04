@@ -17,9 +17,12 @@
     "plugins": [
         "@typescript-eslint",
         "react",
-        "prettier"
+        "prettier",
+        "react-hooks"  // Add this line
     ],
     "rules": {
+        "react-hooks/rules-of-hooks": "error",  // Add this line
+        "react-hooks/exhaustive-deps": "warn"  // Add this line
     },
     "settings": {
         "import/resolvers": {

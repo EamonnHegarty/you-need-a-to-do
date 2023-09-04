@@ -13,7 +13,7 @@ import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { FormControl } from '@mui/material';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/user/apiActions';
 import { setUserInfo } from '../../store/user/action';
 import { toast } from 'react-toastify';
@@ -28,22 +28,18 @@ export const Login: FC = (): ReactElement => {
 
   const { userInfo } = useAppSelector((state) => state.user);
 
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get('redirect') || '/';
-
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect);
+      navigate('/dashboard');
     }
-  }, [userInfo, redirect, navigate]);
+  }, [userInfo, navigate]);
 
   const handleOnEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value }: { value: string } = event.target;
       setEmail(value);
     },
-    [setEmail],
+    [],
   );
 
   const handleOnPasswordChange = useCallback(
@@ -51,12 +47,19 @@ export const Login: FC = (): ReactElement => {
       const { value }: { value: string } = event.target;
       setPassword(value);
     },
-    [setPassword],
+    [],
   );
 
   const handleOnSubmitForm = useCallback(() => {
     const promise = dispatch(login({ email, password })).unwrap();
-  }, []);
+    promise
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  }, [dispatch, email, password]);
 
   return (
     <Container component="main" maxWidth="xs">

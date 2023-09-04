@@ -14,13 +14,15 @@ import { Box } from '@mui/material';
 export const Dashboard: FC = (): ReactElement => {
   const dispatch = useAppDispatch();
 
-  dispatch(getTodos());
-
   const { data } = useAppSelector((state) => state.app);
 
   const [numTodo, setNumToDo] = useState<number>(0);
   const [numInProgress, setNumInProgress] = useState<number>(0);
   const [numCompleted, setNumCompleted] = useState<number>(0);
+
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
 
   useEffect(() => {
     if (data) {
