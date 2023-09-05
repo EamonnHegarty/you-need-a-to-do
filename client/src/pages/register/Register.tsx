@@ -17,27 +17,35 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Loader } from '../../components/Loader/Loader';
-import { useLoginMutation } from '../../slices/usersApiSlice';
+import { useRegsiterMutation } from '../../slices/usersApiSlice';
 import { setCredentials } from '../../slices/authSlice';
 import { UserInfo } from '../../interfaces/IUserInfo';
 
-export const Login: FC = (): ReactElement => {
+export const Register: FC = (): ReactElement => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [register, { isLoading }] = useRegsiterMutation();
 
   const { userInfo } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo);
       navigate('/dashboard');
     }
   }, [userInfo, navigate]);
+
+  const handleOnNameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value }: { value: string } = event.target;
+      setName(value);
+    },
+    [],
+  );
 
   const handleOnEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +64,7 @@ export const Login: FC = (): ReactElement => {
   );
 
   const handleOnSubmitForm = useCallback(() => {
-    const promise = login({ email, password }).unwrap();
+    const promise = register({ name, email, password }).unwrap();
 
     promise
       .then((response: UserInfo) => {
@@ -65,13 +73,14 @@ export const Login: FC = (): ReactElement => {
         navigate('/dashboard');
       })
       .catch(() => {
-        toast.error('Invalid email or password');
+        toast.error('Failed to log in');
       })
       .finally(() => {
         setEmail('');
         setPassword('');
+        setName('');
       });
-  }, [dispatch, email, login, navigate, password]);
+  }, [dispatch, email, name, navigate, password, register]);
 
   return (
     <>
@@ -104,6 +113,20 @@ export const Login: FC = (): ReactElement => {
               <FormControl fullWidth>
                 <TextField
                   margin="normal"
+                  value={name}
+                  onChange={handleOnNameChange}
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  name="name"
+                  autoComplete="off"
+                  autoFocus
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  margin="normal"
                   value={email}
                   onChange={handleOnEmailChange}
                   required
@@ -112,7 +135,6 @@ export const Login: FC = (): ReactElement => {
                   label="Email Address"
                   name="email"
                   autoComplete="off"
-                  autoFocus
                 />
               </FormControl>
               <FormControl fullWidth>
@@ -136,9 +158,9 @@ export const Login: FC = (): ReactElement => {
                 sx={{ mt: 3, mb: 2 }}
                 disabled={isLoading}
               >
-                Sign In
+                Register
               </Button>
-              <Link to="/register">{'   '}Register</Link>
+              <Link to="/">{'   '}Login</Link>
             </Box>
           </Box>
         </Container>
