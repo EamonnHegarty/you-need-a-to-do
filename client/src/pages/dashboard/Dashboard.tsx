@@ -71,9 +71,12 @@ export const Dashboard: FC = (): ReactElement => {
                 {data?.map((toDo: IData, index: number) => (
                   <Task
                     key={index}
+                    id={toDo.id}
                     title={toDo.title}
                     description={toDo.description}
                     priority={toDo.priority}
+                    status={toDo.status}
+                    task_date={toDo.task_date || null}
                   />
                 ))}
               </Grid>

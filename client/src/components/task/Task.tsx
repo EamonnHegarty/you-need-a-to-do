@@ -7,23 +7,14 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
-import { ITask } from '../../interfaces/ITask';
+import { IData } from '../../interfaces/IData';
+import dayjs from 'dayjs';
 import { Status } from '../../enums/Status';
-import { Priority } from '../../enums/Priority';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 
-export const Task: FC<ITask> = (props): ReactElement => {
-  const {
-    title = 'Test Title',
-    date = new Date(),
-    description = 'Test Description',
-    priority = Priority.normal,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    status = Status.completed,
-    onStatusChange = (e) => console.log(e),
-    onClick = (e) => console.log(e),
-  } = props;
+export const Task: FC<IData> = (props): ReactElement => {
+  const { title, task_date, description, status } = props;
+
+  const formattedDate = task_date ? dayjs(task_date).format('YYYY-MM-DD') : '';
 
   return (
     <Box
@@ -44,7 +35,7 @@ export const Task: FC<ITask> = (props): ReactElement => {
           <Typography variant="h6">{title}</Typography>
         </Box>
         <Box>
-          <Chip variant="outlined" label={format(date, 'PPP')} />
+          <Chip variant="outlined" label={formattedDate} />
         </Box>
       </Box>
       <Box>
@@ -59,7 +50,7 @@ export const Task: FC<ITask> = (props): ReactElement => {
         <FormControlLabel
           label="In Progress"
           control={
-            <Switch onChange={(e) => onStatusChange(e)} color="warning" />
+            <Switch color="warning" checked={status === Status.inProgress} />
           }
         />
         <Button
@@ -67,21 +58,10 @@ export const Task: FC<ITask> = (props): ReactElement => {
           color="success"
           size="small"
           sx={{ color: '#ffffff' }}
-          onClick={(e) => onClick(e)}
         >
           Mark Complete
         </Button>
       </Box>
     </Box>
   );
-};
-
-Task.propTypes = {
-  title: PropTypes.string,
-  date: PropTypes.instanceOf(Date),
-  description: PropTypes.string,
-  onStatusChange: PropTypes.func,
-  onClick: PropTypes.func,
-  priority: PropTypes.string,
-  status: PropTypes.string,
 };
