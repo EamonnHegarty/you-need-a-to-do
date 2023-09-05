@@ -34,7 +34,6 @@ export const Login: FC = (): ReactElement => {
 
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo);
       navigate('/dashboard');
     }
   }, [userInfo, navigate]);

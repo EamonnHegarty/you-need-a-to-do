@@ -9,7 +9,14 @@ export const todosApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createTodo: builder.mutation({
+      query: (data) => ({
+        url: `${TODOS_URL}`,
+        method: 'POST',
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
-export const { useGetTodosQuery } = todosApiSlice;
+export const { useGetTodosQuery, useCreateTodoMutation } = todosApiSlice;

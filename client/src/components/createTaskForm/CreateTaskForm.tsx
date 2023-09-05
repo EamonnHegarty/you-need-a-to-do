@@ -1,10 +1,9 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useState, useCallback } from 'react';
 import {
   Box,
   Typography,
   Stack,
   TextField,
-  SelectChangeEvent,
   InputLabel,
   Select,
   FormControl,
@@ -16,41 +15,79 @@ import { Priority } from '../../enums/Priority';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { ISelectField } from '../../interfaces/ISelectField';
-
-const TaskSelectField: FC<ISelectField> = (props): ReactElement => {
-  const {
-    value = '',
-    label = 'Select Box',
-    name = 'selectBox',
-    items = [{ value: '', label: 'Add Items' }],
-    disabled = false,
-    onChange = (e: SelectChangeEvent) => console.log(e),
-  } = props;
-
-  return (
-    <FormControl fullWidth size="small">
-      <InputLabel id={`${name}-id`}>{label}</InputLabel>
-      <Select
-        labelId={`${name}-id`}
-        id={`${name}-id-select`}
-        value={value}
-        label={label}
-        name={name}
-        onChange={onChange}
-        disabled={disabled}
-      >
-        {items.map((item, index) => (
-          <MenuItem key={index} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-};
+import { SelectChangeEvent } from '@mui/material/Select';
+import { Dayjs } from 'dayjs';
+import { useCreateTodoMutation } from '../../slices/todosApiSlice';
+import { toast } from 'react-toastify';
 
 export const CreateTaskForm: FC = (): ReactElement => {
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [taskDate, setTaskDate] = useState<Dayjs | null>(null);
+  const [status, setStatus] = useState<string>('');
+  const [priority, setPriority] = useState<string>('');
+
+  const [createTodo, { isLoading, isError }] = useCreateTodoMutation();
+
+  const handleOnTitleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value }: { value: string } = event.target;
+      setTitle(value);
+    },
+    [],
+  );
+
+  const handleOnDescriptionChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value }: { value: string } = event.target;
+      setDescription(value);
+    },
+    [],
+  );
+  const handleOnTaskDateChange = useCallback((newDate: Dayjs | null) => {
+    setTaskDate(newDate);
+  }, []);
+
+  const handleOnStatusChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      const { value }: { value: string } = event.target;
+      setStatus(value);
+    },
+    [],
+  );
+  const handleOnPriotiyChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      const { value }: { value: string } = event.target;
+      setPriority(value);
+    },
+    [],
+  );
+
+  const handleOnSubmitForm = useCallback(() => {
+    const promise = createTodo({
+      title,
+      description,
+      task_date: taskDate,
+      status,
+      priority,
+    }).unwrap();
+
+    promise
+      .then(() => {
+        toast.success('Successfully add new to do');
+      })
+      .catch(() => {
+        toast.error('Failed to create a new to do');
+      })
+      .finally(() => {
+        setTitle('');
+        setDescription('');
+        setTaskDate(null);
+        setStatus('');
+        setPriority('');
+      });
+  }, [createTodo, description, priority, status, taskDate, title]);
+
   return (
     <Box
       display="flex"
@@ -71,10 +108,12 @@ export const CreateTaskForm: FC = (): ReactElement => {
           variant="outlined"
           size="small"
           name="title"
+          value={title}
+          onChange={handleOnTitleChange}
           fullWidth
         />
         <TextField
-          id="Description"
+          id="description"
           name="description"
           label="Description"
           placeholder="Description"
@@ -82,30 +121,66 @@ export const CreateTaskForm: FC = (): ReactElement => {
           size="small"
           multiline
           rows={4}
+          value={description}
+          onChange={handleOnDescriptionChange}
           fullWidth
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker label="Task Date" format="DD/MM/YY" />
+          <DatePicker
+            label="Task Date"
+            format="DD/MM/YY"
+            value={taskDate}
+            onChange={handleOnTaskDateChange}
+          />
         </LocalizationProvider>
         <Stack sx={{ width: '100%' }} direction="row" spacing={2}>
-          <TaskSelectField
-            label="Status"
-            name="status"
-            items={Object.values(Status).map((status) => ({
-              value: status,
-              label: status.toUpperCase(),
-            }))}
-          />
-          <TaskSelectField
-            label="Priority"
-            name="priority"
-            items={Object.values(Priority).map((priority) => ({
-              value: priority,
-              label: priority.toUpperCase(),
-            }))}
-          />
+          {/* Status Select */}
+          <FormControl fullWidth size="small">
+            <InputLabel id="status">Status</InputLabel>
+            <Select
+              labelId="status"
+              id="status-select"
+              name="status"
+              value={status}
+              onChange={handleOnStatusChange}
+              MenuProps={{
+                disableScrollLock: true,
+              }}
+            >
+              {Object.values(Status).map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {/* Priority Select */}
+          <FormControl fullWidth size="small">
+            <InputLabel id="priority">Priority</InputLabel>
+            <Select
+              labelId="priority"
+              id="priority-select"
+              name="priority"
+              value={priority}
+              onChange={handleOnPriotiyChange}
+              MenuProps={{
+                disableScrollLock: true,
+              }}
+            >
+              {Object.values(Priority).map((item, index) => (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Stack>
-        <Button variant="contained" size="large" fullWidth>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleOnSubmitForm}
+          fullWidth
+        >
           Create A Task
         </Button>
       </Stack>
