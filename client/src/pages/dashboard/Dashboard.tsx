@@ -13,11 +13,12 @@ import { IData } from '../../interfaces/IData';
 import { Loader } from '../../components/Loader/Loader';
 
 export const Dashboard: FC = (): ReactElement => {
-  const { data, isLoading, isError } = useGetTodosQuery({});
+  const { data, isLoading, isError, refetch } = useGetTodosQuery({});
 
   const [numTodo, setNumToDo] = useState<number>(0);
   const [numInProgress, setNumInProgress] = useState<number>(0);
   const [numCompleted, setNumCompleted] = useState<number>(0);
+  const [shouldRefreshData, setShouldRefreshData] = useState<boolean>(false);
 
   useEffect(() => {
     if (data) {
@@ -40,6 +41,13 @@ export const Dashboard: FC = (): ReactElement => {
       setNumCompleted(numCompleted);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (shouldRefreshData) {
+      refetch();
+      setShouldRefreshData(false);
+    }
+  }, [shouldRefreshData, refetch]);
 
   return (
     <>
@@ -71,12 +79,12 @@ export const Dashboard: FC = (): ReactElement => {
                 {data?.map((toDo: IData, index: number) => (
                   <Task
                     key={index}
-                    id={toDo.id}
+                    _id={toDo._id}
                     title={toDo.title}
                     description={toDo.description}
-                    priority={toDo.priority}
                     status={toDo.status}
                     task_date={toDo.task_date || null}
+                    setShouldRefreshData={setShouldRefreshData}
                   />
                 ))}
               </Grid>
@@ -99,7 +107,7 @@ export const Dashboard: FC = (): ReactElement => {
             }}
           >
             <Profile name="Eamonn" />
-            <CreateTaskForm />
+            <CreateTaskForm setShouldRefreshData={setShouldRefreshData} />
           </Grid>
         </Grid>
       )}

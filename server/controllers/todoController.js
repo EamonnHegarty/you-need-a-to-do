@@ -13,7 +13,7 @@ const getTodos = asyncHandler(async (req, res) => {
 // @route POST /api/todos
 // @access PRIVATE
 const createTodo = asyncHandler(async (req, res) => {
-  const { title, description, task_date, status, priority } = req.body;
+  const { title, description, task_date, status } = req.body;
 
   const todo = new Todo({
     user: req.user._id,
@@ -21,7 +21,6 @@ const createTodo = asyncHandler(async (req, res) => {
     description,
     task_date,
     status,
-    priority,
   });
 
   const createdTodo = await todo.save();
@@ -29,4 +28,22 @@ const createTodo = asyncHandler(async (req, res) => {
   res.status(201).json(createdTodo);
 });
 
-export { getTodos, createTodo };
+// @desc Update a To do
+// @route PUT /api/todos/:id
+// @access PRIVATE
+const updateTodo = asyncHandler(async (req, res) => {
+  const todo = await Todo.findById(req.params.id);
+
+  if (todo) {
+    // Update properties here
+    todo.status = req.body.status || todo.status;
+
+    const updatedTodo = await todo.save();
+    res.json(updatedTodo);
+  } else {
+    res.status(404);
+    throw new Error("Todo not found");
+  }
+});
+
+export { getTodos, createTodo, updateTodo };

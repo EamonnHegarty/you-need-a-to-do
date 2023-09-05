@@ -1,4 +1,10 @@
-import React, { FC, ReactElement } from 'react';
+import React, {
+  FC,
+  ReactElement,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import {
   Box,
   Button,
@@ -10,11 +16,43 @@ import {
 import { IData } from '../../interfaces/IData';
 import dayjs from 'dayjs';
 import { Status } from '../../enums/Status';
+import { useUpdateTodoMutation } from '../../slices/todosApiSlice';
 
-export const Task: FC<IData> = (props): ReactElement => {
-  const { title, task_date, description, status } = props;
+interface Task extends IData {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  setShouldRefreshData: Function;
+}
+
+export const Task: FC<Task> = (props): ReactElement => {
+  const { _id, title, task_date, description, status, setShouldRefreshData } =
+    props;
+
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
+  const [checked, setChecked] = useState(status === Status.inProgress);
 
   const formattedDate = task_date ? dayjs(task_date).format('YYYY-MM-DD') : '';
+
+  useEffect(() => {
+    setChecked(status === Status.inProgress);
+  }, [status]);
+
+  const handleOnStatusChange = useCallback(() => {
+    const newStatus = checked ? Status.todo : Status.inProgress;
+
+    const promise = updateTodo({
+      id: _id,
+      status: newStatus,
+    }).unwrap();
+
+    promise
+      .then(() => {
+        setChecked(!checked);
+        setShouldRefreshData(true);
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  }, [_id, checked, setShouldRefreshData, updateTodo]);
 
   return (
     <Box
@@ -50,7 +88,12 @@ export const Task: FC<IData> = (props): ReactElement => {
         <FormControlLabel
           label="In Progress"
           control={
-            <Switch color="warning" checked={status === Status.inProgress} />
+            <Switch
+              color="warning"
+              checked={checked}
+              onChange={handleOnStatusChange}
+              disabled={isLoading}
+            />
           }
         />
         <Button
@@ -58,6 +101,7 @@ export const Task: FC<IData> = (props): ReactElement => {
           color="success"
           size="small"
           sx={{ color: '#ffffff' }}
+          disabled={isLoading}
         >
           Mark Complete
         </Button>

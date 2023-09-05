@@ -16,7 +16,18 @@ export const todosApiSlice = apiSlice.injectEndpoints({
         body: { ...data },
       }),
     }),
+    updateTodo: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `${TODOS_URL}/${id}`,
+        method: 'PUT',
+        body: { status },
+      }),
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useCreateTodoMutation } = todosApiSlice;
+export const {
+  useGetTodosQuery,
+  useCreateTodoMutation,
+  useUpdateTodoMutation,
+} = todosApiSlice;
