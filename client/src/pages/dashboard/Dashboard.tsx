@@ -25,14 +25,15 @@ export const Dashboard: FC = (): ReactElement => {
   const [shouldRefreshData, setShouldRefreshData] = useState<boolean>(false);
   const [timeFrame, setTimeFrame] = useState<string>('day');
   const [filteredTasks, setFilteredTasks] = useState<IData[]>([]);
+  const [newFilteredTasks, setNewFilteredTasks] = useState<IData[]>([]);
 
   useEffect(() => {
-    if (data) {
+    if (newFilteredTasks) {
       let numTodo = 0;
       let numInProgress = 0;
       let numCompleted = 0;
 
-      data.forEach((item: IData) => {
+      newFilteredTasks.forEach((item: IData) => {
         if (item.status === Status.todo) {
           numTodo++;
         } else if (item.status === Status.inProgress) {
@@ -46,7 +47,7 @@ export const Dashboard: FC = (): ReactElement => {
       setNumInProgress(numInProgress);
       setNumCompleted(numCompleted);
     }
-  }, [data]);
+  }, [data, newFilteredTasks]);
 
   useEffect(() => {
     if (shouldRefreshData) {
@@ -57,9 +58,10 @@ export const Dashboard: FC = (): ReactElement => {
 
   useEffect(() => {
     const sortedData = sortTasksByStatus(data || []);
-    const newFilteredTasks = filterTasksByTimeFrame(sortedData, timeFrame);
-    setFilteredTasks(newFilteredTasks);
-  }, [data, timeFrame]); // Re-run this effect whenever `data` or `timeFrame` changes
+    const newlyFilteredTasks = filterTasksByTimeFrame(sortedData, timeFrame);
+    setNewFilteredTasks(newlyFilteredTasks);
+    setFilteredTasks(newlyFilteredTasks);
+  }, [data, timeFrame]);
 
   const handleTimeFrameChange = useCallback(
     (event: SelectChangeEvent<string>) => {
