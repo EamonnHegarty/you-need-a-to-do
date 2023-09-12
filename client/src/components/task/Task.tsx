@@ -71,7 +71,7 @@ export const Task: FC<Task> = (props): ReactElement => {
       .catch(() => {
         console.log('error');
       });
-  }, [_id, checked, setShouldRefreshData, updateTodo]);
+  }, [_id, checked, setShouldRefreshData, status, updateTodo]);
 
   return (
     <Box

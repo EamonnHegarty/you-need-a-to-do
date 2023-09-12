@@ -1,5 +1,5 @@
-import React, { FC, ReactElement } from 'react';
-import { Grid } from '@mui/material';
+import React, { FC, ReactElement, useCallback } from 'react';
+import { Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Profile } from '../../components/profile/Profile';
 import { CreateTaskForm } from '../../components/createTaskForm/CreateTaskForm';
 import { Status } from '../../enums/Status';
@@ -12,14 +12,19 @@ import { useGetTodosQuery } from '../../slices/todosApiSlice';
 import { IData } from '../../interfaces/IData';
 import { Loader } from '../../components/Loader/Loader';
 import { sortTasksByStatus } from '../../utils/sortTasksByStatus';
+import { filterTasksByTimeFrame } from '../../utils/filterTasksByTimeFrame';
 
 export const Dashboard: FC = (): ReactElement => {
-  const { data, isLoading, isError, refetch } = useGetTodosQuery({});
+  const { data, isLoading, isError, refetch, isFetching } = useGetTodosQuery(
+    {},
+  );
 
   const [numTodo, setNumToDo] = useState<number>(0);
   const [numInProgress, setNumInProgress] = useState<number>(0);
   const [numCompleted, setNumCompleted] = useState<number>(0);
   const [shouldRefreshData, setShouldRefreshData] = useState<boolean>(false);
+  const [timeFrame, setTimeFrame] = useState<string>('all');
+  const [filteredTasks, setFilteredTasks] = useState<IData[]>([]);
 
   useEffect(() => {
     if (data) {
@@ -48,9 +53,21 @@ export const Dashboard: FC = (): ReactElement => {
       refetch();
       setShouldRefreshData(false);
     }
-  }, [shouldRefreshData, refetch]);
+  }, [shouldRefreshData, refetch, isLoading]);
 
-  const sortedData = sortTasksByStatus(data || []);
+  useEffect(() => {
+    const sortedData = sortTasksByStatus(data || []);
+    const newFilteredTasks = filterTasksByTimeFrame(sortedData, timeFrame);
+    setFilteredTasks(newFilteredTasks);
+  }, [data, timeFrame]); // Re-run this effect whenever `data` or `timeFrame` changes
+
+  const handleTimeFrameChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      const { value }: { value: string } = event.target;
+      setTimeFrame(value);
+    },
+    [],
+  );
 
   return (
     <>
@@ -60,7 +77,7 @@ export const Dashboard: FC = (): ReactElement => {
         <h1>Oh no something went wrong</h1>
       ) : (
         <Grid container minHeight="100vh" p={0} m={0}>
-          <Grid item md={8} px={4}>
+          <Grid item xs={12} md={8} px={4}>
             <Grid container display="flex" justifyContent="center">
               <Box mb={4} px={4}>
                 <h2>Status Of Your Task As On {format(new Date(), 'PPPP')}</h2>
@@ -78,8 +95,25 @@ export const Dashboard: FC = (): ReactElement => {
                 <TaskCounter status={Status.inProgress} count={numInProgress} />
                 <TaskCounter status={Status.completed} count={numCompleted} />
               </Grid>
+              <Grid item display="flex" xs={10} md={8} mb={2}>
+                <Select
+                  value={timeFrame}
+                  onChange={handleTimeFrameChange}
+                  MenuProps={{
+                    disableScrollLock: true,
+                  }}
+                  sx={{ width: '150px' }}
+                  disabled={isFetching}
+                >
+                  <MenuItem value={'all'}>All</MenuItem>
+                  <MenuItem value={'day'}>Daily</MenuItem>
+                  <MenuItem value={'week'}>Weekly</MenuItem>
+                  <MenuItem value={'month'}>Monthly</MenuItem>
+                  <MenuItem value={'year'}>Yearly</MenuItem>
+                </Select>
+              </Grid>
               <Grid item display="flex" flexDirection="column" xs={10} md={8}>
-                {sortedData?.map((toDo: IData) => (
+                {filteredTasks?.map((toDo: IData) => (
                   <Task
                     key={toDo._id}
                     _id={toDo._id}
@@ -95,6 +129,7 @@ export const Dashboard: FC = (): ReactElement => {
           </Grid>
           <Grid
             item
+            xs={12} // Takes up the entire width on xs screens and smaller
             md={4}
             sx={{
               height: '100vh',
