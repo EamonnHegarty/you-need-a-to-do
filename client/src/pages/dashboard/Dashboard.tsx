@@ -11,6 +11,7 @@ import { Box } from '@mui/material';
 import { useGetTodosQuery } from '../../slices/todosApiSlice';
 import { IData } from '../../interfaces/IData';
 import { Loader } from '../../components/Loader/Loader';
+import { sortTasksByStatus } from '../../utils/sortTasksByStatus';
 
 export const Dashboard: FC = (): ReactElement => {
   const { data, isLoading, isError, refetch } = useGetTodosQuery({});
@@ -49,6 +50,8 @@ export const Dashboard: FC = (): ReactElement => {
     }
   }, [shouldRefreshData, refetch]);
 
+  const sortedData = sortTasksByStatus(data || []);
+
   return (
     <>
       {isLoading ? (
@@ -76,9 +79,9 @@ export const Dashboard: FC = (): ReactElement => {
                 <TaskCounter status={Status.completed} count={numCompleted} />
               </Grid>
               <Grid item display="flex" flexDirection="column" xs={10} md={8}>
-                {data?.map((toDo: IData, index: number) => (
+                {sortedData?.map((toDo: IData) => (
                   <Task
-                    key={index}
+                    key={toDo._id}
                     _id={toDo._id}
                     title={toDo.title}
                     description={toDo.description}

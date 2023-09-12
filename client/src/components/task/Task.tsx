@@ -54,6 +54,25 @@ export const Task: FC<Task> = (props): ReactElement => {
       });
   }, [_id, checked, setShouldRefreshData, updateTodo]);
 
+  const handleOnMarkComplete = useCallback(() => {
+    const newStatus =
+      status === Status.completed ? Status.todo : Status.completed;
+
+    const promise = updateTodo({
+      id: _id,
+      status: newStatus,
+    }).unwrap();
+
+    promise
+      .then(() => {
+        setChecked(!checked);
+        setShouldRefreshData(true);
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  }, [_id, checked, setShouldRefreshData, updateTodo]);
+
   return (
     <Box
       display="flex"
@@ -85,25 +104,29 @@ export const Task: FC<Task> = (props): ReactElement => {
         alignItems="center"
         mt={2}
       >
-        <FormControlLabel
-          label="In Progress"
-          control={
-            <Switch
-              color="warning"
-              checked={checked}
-              onChange={handleOnStatusChange}
-              disabled={isLoading}
-            />
-          }
-        />
+        {status !== Status.completed && (
+          <FormControlLabel
+            label="In Progress"
+            control={
+              <Switch
+                color="warning"
+                checked={checked}
+                onChange={handleOnStatusChange}
+                disabled={isLoading}
+              />
+            }
+          />
+        )}
+
         <Button
           variant="contained"
-          color="success"
+          color={status === Status.completed ? 'error' : 'success'}
           size="small"
           sx={{ color: '#ffffff' }}
           disabled={isLoading}
+          onClick={handleOnMarkComplete}
         >
-          Mark Complete
+          {status === Status.completed ? 'Mark Uncomplete' : 'Mark Complete'}
         </Button>
       </Box>
     </Box>
