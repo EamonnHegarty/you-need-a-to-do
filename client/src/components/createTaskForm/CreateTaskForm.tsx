@@ -145,11 +145,8 @@ export const CreateTaskForm: FC<CreateTaskForm> = (props): ReactElement => {
             }}
             disabled={isLoading}
           >
-            {Object.values(Status).map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {item}
-              </MenuItem>
-            ))}
+            <MenuItem value={'todo'}>To Do</MenuItem>
+            <MenuItem value={'inProgress'}>In Progress</MenuItem>
           </Select>
         </FormControl>
 
