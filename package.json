@@ -10,7 +10,8 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:create": "node server/data/seeder.js",
-    "data:delete": "node server/data/seeder.js -d"
+    "data:delete": "node server/data/seeder.js -d",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "Eamonn Hegarty",
   "license": "MIT",
