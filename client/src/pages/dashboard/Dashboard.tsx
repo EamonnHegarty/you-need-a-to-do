@@ -23,7 +23,7 @@ export const Dashboard: FC = (): ReactElement => {
   const [numInProgress, setNumInProgress] = useState<number>(0);
   const [numCompleted, setNumCompleted] = useState<number>(0);
   const [shouldRefreshData, setShouldRefreshData] = useState<boolean>(false);
-  const [timeFrame, setTimeFrame] = useState<string>('all');
+  const [timeFrame, setTimeFrame] = useState<string>('day');
   const [filteredTasks, setFilteredTasks] = useState<IData[]>([]);
 
   useEffect(() => {
