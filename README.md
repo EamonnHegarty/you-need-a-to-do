@@ -1,33 +1,17 @@
 # Project
-This application is a MERN stack to-do application which is used to maintain user's to do's in a productive and user friendly manner. 
+This application is a MERN stack to-do application designed to help users manage their tasks in a user-friendly and productive manner.
 
 # Description
-You Need A To Do is a single-page application (SPA) with Typescript, created using `npx create-create-app` command. The server (backend) is built using `Node` and `Express`. 
+You Need A To Do is a single-page application built using TypeScript. It was bootstrapped using the npx create-react-app command. The backend is powered by Node.js and Express, providing a modular and easily maintainable code structure.
 
-# Production Environment 
-- [You Need A To Do](https://you-need-a-to-do.onrender.com)
+# Live Demo
+You can check out a live demo of the project at [You Need A To Do](https://you-need-a-to-do.onrender.com/). Currently using free service so this might be down sometimes please feel free to clone the repo or contact me on eamonnhegarty@hotmail.com and I will re start the service for you. 
 
 # Backend Overview
-The backend of this application is built using Node.js and the Express framework, providing a powerful, yet lightweight web server environment. The codebase is modularized into routes and middleware to improve readability and maintainability.
+The backend of You Need A To Do leverages the power of Node.js and Express to offer a robust web server environment. With the modularization of routes and middleware, the codebase remains easy to read and maintain. Key features include secure JSON Web Token (JWT) authentication, customizable environment variables via dotenv, and a custom MongoDB database connection function. This setup ensures secure, scalable data storage, and efficient request handling.
 
-## Key Features
-### Environment Variable Management
-Utilizes dotenv for environment variable management, making it easy to configure variables such as the database URL and JWT secrets.
-### Database Connection
-Utilizes a custom connectDB function to connect to a MongoDB database. This allows for robust, scalable data storage that can be queried in real-time.
-### JSON Web Token (JWT) Authentication
-The backend employs JSON Web Tokens (JWT) for authentication. JWT is a compact, URL-safe means of representing claims to be transferred between two parties. This enables secure, token-based authentication for user routes.
-### Middleware
-Employs custom error-handling middleware (notFound and errorHandler) to elegantly handle 404 Not Found errors and other types of server errors, improving user experience.
-### Body Parsing
-Uses express.json() and express.urlencoded() as middleware for parsing incoming JSON and URL-encoded data. This makes it easier to handle incoming requests from the client.
-### Cookie Management
-Utilizes cookie-parser middleware to parse cookies in the incoming requests, thereby facilitating session-based operations.
-### API Routing
-Routes for managing todo items (todoRoutes) and users (userRoutes) are separated into their own files, making the codebase easier to manage and extend.
-### Production and Development Environments
-The backend is set up to identify whether it's running in a production or development environment. In a production setting, it serves static files from the client/build directory and redirects all non-API routes to the index.html file. In a development setting, it simply shows a message stating that the "API is running."
-
+# Frontend Overview
+The frontend is built using React and enhances the user experience with Material UI components. Redux Toolkit and React-Redux provide efficient state management. Styling is achieved using the Emotion library, which allows for dynamic CSS-in-JS styles. Axios is used for HTTP requests, and the frontend includes libraries like date-fns and dayjs for date manipulation.
 # Login 
 ![image](https://github.com/EamonnHegarty/you-need-a-to-do/assets/91144434/c58c0b80-542b-428f-8297-1a9be672be93)
 
