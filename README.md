@@ -12,9 +12,5 @@ The backend of You Need A To Do leverages the power of Node.js and Express to of
 
 # Frontend (Client) Overview
 The frontend is built using React and enhances the user experience with Material UI components. Redux Toolkit and React-Redux provide efficient state management. Styling is achieved using the Emotion library, which allows for dynamic CSS-in-JS styles. Axios is used for HTTP requests, and the frontend includes libraries like date-fns and dayjs for date manipulation.
-# Login 
-![image](https://github.com/EamonnHegarty/you-need-a-to-do/assets/91144434/c58c0b80-542b-428f-8297-1a9be672be93)
 
-# Dashboard 
-![image](https://github.com/EamonnHegarty/you-need-a-to-do/assets/91144434/28e6a6e6-13c8-4d31-81d4-0febdc81b0e7)
 
