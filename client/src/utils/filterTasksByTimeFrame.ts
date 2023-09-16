@@ -2,11 +2,9 @@ import dayjs from 'dayjs';
 import { IData } from '../interfaces/IData';
 
 export const filterTasksByTimeFrame = (tasks: IData[], timeFrame: string) => {
-  // The current date for reference
-  const currentDate = dayjs(); // Make sure to import dayjs
+  const currentDate = dayjs();
 
   return tasks.filter((task) => {
-    // Convert string date to Dayjs object
     const taskDate = dayjs(task.task_date);
 
     switch (timeFrame) {
