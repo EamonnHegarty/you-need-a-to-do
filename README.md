@@ -2,7 +2,7 @@
 This application is a MERN stack to-do application designed to help users manage their tasks in a user-friendly and productive manner.
 
 # Description
-You Need A To Do is a React single-page application built using TypeScript. It was bootstrapped using the npx create-react-app command. The backend is powered by Node.js and Express, providing a modular and easily maintainable code structure.
+You Need A To Do is a React single-page application built using TypeScript. The backend is powered by Node.js and Express, providing a modular and easily maintainable code structure.
 
 # Live Demo
 You can check out a live demo of the project at [You Need A To Do](https://you-need-a-to-do.onrender.com/). Currently using free service so it might take some time on initial load please feel free to clone the repo but you will have to configure your own mongodb and add the relevant secret. 
