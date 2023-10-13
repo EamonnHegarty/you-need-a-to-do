@@ -107,7 +107,7 @@ export const Register: FC = (): ReactElement => {
               <LockTwoToneIcon sx={{ width: '66px', height: '66px' }} />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Register
             </Typography>
             <Box sx={{ mt: 1 }}>
               <FormControl fullWidth>
