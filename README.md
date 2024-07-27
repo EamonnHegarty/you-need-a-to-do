@@ -7,6 +7,9 @@ You Need A To Do is a React single-page application built using TypeScript. The 
 # Live Demo
 You can check out a live demo of the project at [You Need A To Do](https://you-need-a-to-do.onrender.com/). Currently using free service so it might take some time on initial load please feel free to clone the repo but you will have to configure your own mongodb and add the relevant secret. 
 
+![image](https://github.com/user-attachments/assets/fc0d4373-eb76-4309-848a-ee3d29e5db90)
+
+
 # Backend (Server) Overview
 The backend of You Need A To Do leverages the power of Node.js and Express to offer a robust web server environment. With the modularization of routes and middleware, the codebase remains easy to read and maintain. Key features include secure JSON Web Token (JWT) authentication, customizable environment variables via dotenv, and a custom MongoDB database connection function. This setup ensures secure, scalable data storage, and efficient request handling.
 
